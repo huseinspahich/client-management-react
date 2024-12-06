@@ -1,10 +1,26 @@
+import { useEffect,useState } from 'react'
 import React from 'react'
+import NavBar from './components/Navbar'
+import TableList from './components/Tablelist'
+import ModalForm from './components/ModalForm'
 
 const App = () => {
+  const [modalTitle, setModalTitle] = useState("Add");
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    document.getElementById("my_modal_3").showModal(); 
+  };
+
+
   return (
-    <h1 className="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+
+    <>
+     <NavBar openModal={openModal}/>
+     <TableList openModal={openModal}/>
+     <ModalForm mode={modalTitle}/>
+    </>
+    
   )
 }
 
