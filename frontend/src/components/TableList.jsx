@@ -1,17 +1,28 @@
-import React from 'react'
+import { useEffect,useState } from 'react';
+import React from 'react';
+import axios from 'axios';
 
 const TableList = ({openModal}) => {
+    const [clients, setClients] = useState([]);
 
-    const clients = [ {id:1, name: "John Doe", email:"John.Doe@gmail.com", job:"Developer", rate:"100", isactive: true},
-                     {id:2, name: "John Doe", email:"John.Doe@gmail.com", job:"Developer", rate:"100", isactive: true},
-                     {id:3, name: "John Doe", email:"John.Doe@gmail.com", job:"Developer", rate:"100", isactive: false} ]
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const response = await axios.get('http://localhost:3000/api/clients');
+            setClients(response.data); 
+          } catch (error) {
+            console.error('Error fetching products:', error);
+          }
+        };
+        fetchProducts();
+      }, [])
    
 
   return (
     <>
         <div className="overflow-x-auto mt-10">
             <table className="table">
-        {/* head */}
+
         <thead>
         <tr>
             <th></th>
@@ -23,7 +34,7 @@ const TableList = ({openModal}) => {
         </tr>
         </thead>
         <tbody>
-        {/* row 1 */}
+   
        {clients.map( (client) => (
          <tr className="hover"> 
              <th>{client.id}</th>
