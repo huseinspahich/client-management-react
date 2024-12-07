@@ -30,7 +30,7 @@ export const updateClientHandler = async(req, res) => {
  }
  };
 
- export const deleteClientHandler = async(req, res) => {
+export const deleteClientHandler = async(req, res) => {
     try{
         const id = req.params.id;
         const updatedClient = await clientServices.deleteClient(id);
@@ -38,4 +38,15 @@ export const updateClientHandler = async(req, res) => {
  } catch (error) {
      console.log(error);
  }
- };
+};
+
+ export const searchClientsHandler = async (req, res) => {
+    try {
+        const searchTerm = req.query.search;  
+        const clients = await clientServices.searchClients(searchTerm);
+        res.status(200).json(clients); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error while searching clients." });
+    }
+}; 

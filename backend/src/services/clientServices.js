@@ -38,3 +38,14 @@ export const deleteClient = async (clientData,id) => {
         res.status(500).json({ message: "Failed to delete client" });
   };
 };
+
+export const searchClients = async (searchTerm) => {
+    try {
+        const query = `SELECT * FROM clients_tb WHERE name ILIKE $1`;
+        const result = await db.query(query, [`%${searchTerm}%`]); 
+        return result.rows;  
+    } catch (error) {
+        console.error("Error searching clients:", error);
+        throw error;
+    }
+};
