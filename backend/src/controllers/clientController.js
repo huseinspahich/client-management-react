@@ -21,8 +21,19 @@ export const addClientHandler = async(req, res) => {
 
 export const updateClientHandler = async(req, res) => {
     try{
+        const id = req.params.id;
         const clientData = req.body;
-        const updatedClient = await clientServices.updateClient(clientData);
+        const updatedClient = await clientServices.updateClient(clientData,id);
+        res.status(200).json(updatedClient) 
+ } catch (error) {
+     console.log(error);
+ }
+ };
+
+ export const deleteClientHandler = async(req, res) => {
+    try{
+        const id = req.params.id;
+        const updatedClient = await clientServices.deleteClient(id);
         res.status(200).json(updatedClient) 
  } catch (error) {
      console.log(error);
