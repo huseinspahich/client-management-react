@@ -34,7 +34,7 @@ export const deleteClientHandler = async(req, res) => {
     try{
         const id = req.params.id;
         const updatedClient = await clientServices.deleteClient(id);
-        res.status(200).json(updatedClient) 
+        res.status(200).send() 
  } catch (error) {
      console.log(error);
  }

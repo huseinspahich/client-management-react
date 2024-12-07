@@ -15,7 +15,7 @@ export const addClient = async (clientData) => {
         const {rows} = await db.query("INSERT INTO clients_tb (name,job,email,rate,isactive) VALUES ($1, $2, $3, $4,$5) RETURNING *", [name,job,email,rate,isactive]);
         return rows[0];
     } catch (error) {
-      console.error("Error fetching clients:", error);
+      console.error("Error adding clients:", error);
       throw error; 
   };
 };
