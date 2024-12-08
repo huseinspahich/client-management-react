@@ -21,6 +21,15 @@ const TableList = ({ openModal, searchTerm }) => {
         client.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
+    const handleDeleteClient = async (id) => {
+        try {
+          await axios.delete(`http://localhost:3000/api/clients/${id}`);
+          setClients(clients.filter((client) => client.id !== id));
+        } catch (error) {
+          console.error('Error deleting client:', error);
+        }
+      };     
+    
 
   return (
     <>
@@ -57,7 +66,7 @@ const TableList = ({ openModal, searchTerm }) => {
                     </button>
                 </td>
                 <td>
-                    <button className="btn btn-active btn-accent">
+                    <button onClick={() => handleDeleteClient(client.id)}  className="btn btn-active btn-accent">
                         Delete
                     </button>
                 </td>
