@@ -1,6 +1,9 @@
 import React from 'react'
 
-const NavBar = ({openModal,setSearchTerm}) => {
+const NavBar = ({ onOpen, onSearch}) => {
+  const handleSearchChange = (event) => {
+    onSearch(event.target.value); 
+};
 
   return (
     <>
@@ -14,12 +17,12 @@ const NavBar = ({openModal,setSearchTerm}) => {
         type="text" 
         placeholder="Search" 
         className="input input-bordered w-48 md:w-auto" 
-        onChange={(e) => setSearchTerm(e.target.value)}
+       onChange={handleSearchChange}
         />
     </div>
   </div>
   <div className="navbar-end">
-    <a className="btn btn-neutral" id='Add' onClick={() => openModal("Add")}>Add Client</a>
+    <a className="btn btn-neutral" id='Add' onClick={onOpen}>Add Client</a>
   </div>
 </div> 
     </>

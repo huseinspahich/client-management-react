@@ -2,14 +2,13 @@ import { useEffect,useState } from 'react';
 import React from 'react';
 import axios from 'axios';
 
-const TableList = ({ openModal, searchTerm }) => {
-    const [clients, setClients] = useState([]);
+const TableList = ({ handleOpen, tableData, setTableData , searchTerm}) => {
 
     useEffect(() => {
         const fetchClients = async () => {
           try {
             const response = await axios.get('http://localhost:3000/api/clients');
-            setClients(response.data); 
+            setTableData(response.data); 
           } catch (error) {
             console.error('Error fetching products:', error);
           }
@@ -17,19 +16,22 @@ const TableList = ({ openModal, searchTerm }) => {
         fetchClients();
       }, [])
    
-      const filteredClients = clients.filter((client) =>
+      const filteredData = tableData.filter((client) =>
         client.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
-    const handleDeleteClient = async (id) => {
-        try {
-          await axios.delete(`http://localhost:3000/api/clients/${id}`);
-          setClients(clients.filter((client) => client.id !== id));
-        } catch (error) {
-          console.error('Error deleting client:', error);
+      const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this client?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`http://localhost:3000/api/clients/${id}`); 
+                setTableData((prevData) => prevData.filter(client => client.id !== id)); 
+            } catch (err) {
+                setError(err.message); 
+            }
         }
-      };     
-    
+    };  
+     
 
   return (
     <>
@@ -48,7 +50,7 @@ const TableList = ({ openModal, searchTerm }) => {
         </thead>
         <tbody>
    
-       {filteredClients.map( (client) => (
+       {filteredData.map( (client) => (
          <tr key={client.id} className="hover"> 
              <th>{client.id}</th>
                 <td>{client.name}</td>
@@ -61,12 +63,12 @@ const TableList = ({ openModal, searchTerm }) => {
                     </button>    
                 </td>   
                 <td>
-                    <button className="btn btn-secondary" onClick={() => openModal("Update")}>
-                        Upadate
+                    <button className="btn btn-secondary" onClick={() => handleOpen('edit', client)}>
+                        Update
                     </button>
                 </td>
                 <td>
-                    <button onClick={() => handleDeleteClient(client.id)}  className="btn btn-active btn-accent">
+                    <button  onClick={() => handleDelete(client.id)}  className="btn btn-active btn-accent">
                         Delete
                     </button>
                 </td>
