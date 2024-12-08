@@ -1,6 +1,7 @@
 import React from 'react'
 
-const NavBar = ({openModal}) => {
+const NavBar = ({openModal,setSearchTerm}) => {
+
   return (
     <>
     <div className="navbar bg-base-100">
@@ -9,7 +10,12 @@ const NavBar = ({openModal}) => {
   </div>
   <div className="navbar-center">
   <div className="form-control">
-      <input type="text" placeholder="Search" className="input input-bordered w-48 md:w-auto" />
+      <input 
+        type="text" 
+        placeholder="Search" 
+        className="input input-bordered w-48 md:w-auto" 
+        onChange={(e) => setSearchTerm(e.target.value)}
+        />
     </div>
   </div>
   <div className="navbar-end">

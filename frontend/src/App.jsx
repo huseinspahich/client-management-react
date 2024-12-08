@@ -6,6 +6,7 @@ import ModalForm from './components/ModalForm'
 
 const App = () => {
   const [modalTitle, setModalTitle] = useState("Add");
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   const openModal = (title) => {
     setModalTitle(title);
@@ -16,8 +17,8 @@ const App = () => {
   return (
 
     <>
-     <NavBar openModal={openModal}/>
-     <TableList openModal={openModal}/>
+     <NavBar openModal={openModal} setSearchTerm={setSearchTerm}/>
+     <TableList openModal={openModal} searchTerm={searchTerm}/>
      <ModalForm mode={modalTitle}/>
     </>
     

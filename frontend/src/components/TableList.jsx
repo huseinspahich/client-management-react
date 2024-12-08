@@ -2,11 +2,11 @@ import { useEffect,useState } from 'react';
 import React from 'react';
 import axios from 'axios';
 
-const TableList = ({openModal}) => {
+const TableList = ({ openModal, searchTerm }) => {
     const [clients, setClients] = useState([]);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchClients = async () => {
           try {
             const response = await axios.get('http://localhost:3000/api/clients');
             setClients(response.data); 
@@ -14,9 +14,13 @@ const TableList = ({openModal}) => {
             console.error('Error fetching products:', error);
           }
         };
-        fetchProducts();
+        fetchClients();
       }, [])
    
+      const filteredClients = clients.filter((client) =>
+        client.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
 
   return (
     <>
@@ -35,8 +39,8 @@ const TableList = ({openModal}) => {
         </thead>
         <tbody>
    
-       {clients.map( (client) => (
-         <tr className="hover"> 
+       {filteredClients.map( (client) => (
+         <tr key={client.id} className="hover"> 
              <th>{client.id}</th>
                 <td>{client.name}</td>
                 <td>{client.email}</td>
